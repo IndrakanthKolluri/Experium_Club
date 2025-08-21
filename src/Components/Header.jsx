@@ -1,4 +1,5 @@
 import { Leaf } from "lucide-react";
+import logo from "../assets/experium.png"
 
 export default function Header() {
   return (
@@ -7,7 +8,7 @@ export default function Header() {
         {/* Logo Only */}
         <div className="flex items-center">
           <img
-            src="/src/assets/logo.png"
+            src= {logo}
             alt="Experium Club Logo"
             className="w-20 h-14 object-contain"
             style={{ maxWidth: "160px" }}
