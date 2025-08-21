@@ -29,9 +29,6 @@ export default function CategorySection({ category }) {
   const [current, setCurrent] = useState(0);
   const touchStartX = useRef(null);
 
-  // For Adventure overlay on mobile
-  const [activeOverlay, setActiveOverlay] = useState(null);
-
   // Swipe support for carousel
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
@@ -54,14 +51,6 @@ export default function CategorySection({ category }) {
     setCurrent((prev) =>
       prev === 0 ? category.items.length - 1 : prev - 1
     );
-  };
-
-  // Adventure & Recreation: Overlay logic for mobile
-  const handleCardTouch = (i) => {
-    setActiveOverlay(i);
-    setTimeout(() => {
-      setActiveOverlay(null);
-    }, 3000);
   };
 
   const renderBotanical = () => (
@@ -168,10 +157,6 @@ export default function CategorySection({ category }) {
           variants={cardVariants}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.97 }}
-          // Show overlay on touch for mobile
-          onTouchStart={() => {
-            if (window.innerWidth < 640) handleCardTouch(i);
-          }}
         >
           {/* Image */}
           <motion.img
@@ -186,19 +171,15 @@ export default function CategorySection({ category }) {
             whileTap={{ scale: 1.05 }}
           />
 
-          {/* Overlay: visible on hover (desktop), on touch (mobile) for 3s */}
+          {/* Overlay: visible on hover (desktop) or tap (mobile) */}
           <motion.div
-            className={`absolute inset-0 bg-emerald-900/60 flex items-center justify-center text-center p-4 transition ${
-              (window.innerWidth < 640 && activeOverlay === i) ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-            }`}
+            className="absolute inset-0 bg-emerald-900/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-center p-4"
             initial="hidden"
             animate="hidden"
             whileHover="visible"
+            whileTap="visible"
             variants={overlayVariants}
             transition={{ duration: 0.4 }}
-            style={{
-              pointerEvents: (window.innerWidth < 640 && activeOverlay !== i) ? "none" : "auto"
-            }}
           >
             <div>
               <h3 className="text-xl md:text-2xl font-bold text-white">{item.name}</h3>
@@ -219,100 +200,106 @@ export default function CategorySection({ category }) {
     </motion.div>
   );
 
-  const renderLuxury = () => (
-    <div className="relative w-full mx-auto">
-      <motion.div
-        className="mb-8 flex flex-col items-center"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7 }}
-      >
-        <Sparkles className="w-8 h-8 text-gold-400 mb-2 animate-spin" />
-        <p className="text-lg md:text-xl text-emerald-700 max-w-2xl text-center font-medium">
-          {sectionDescriptions.luxury}
-        </p>
-      </motion.div>
-      {/* Slides */}
-      <div
-        className="overflow-hidden rounded-2xl shadow-xl"
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-      >
-        <AnimatePresence initial={false} mode="wait">
-          <motion.div
-            key={current}
-            className="flex"
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div
-  className="w-full flex-shrink-0 relative" // keep this relative
-  style={{ minWidth: "100%" }}
->
-  <motion.img
-    src={category.items[current].image}
-    alt={category.items[current].name}
-    className="w-full h-64 md:h-96 object-cover"
-    initial={{ opacity: 0, scale: 0.95 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 0.7 }}
-  />
+ const renderLuxury = () => (
+  <div className="relative w-full mx-auto">
+    <motion.div
+      className="mb-8 flex flex-col items-center"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7 }}
+    >
+      <Sparkles className="w-8 h-8 text-gold-400 mb-2 animate-spin" />
+      <p className="text-lg md:text-xl text-emerald-700 max-w-2xl text-center font-medium">
+        {sectionDescriptions.luxury}
+      </p>
+    </motion.div>
 
-  {/* arrows INSIDE this relative div */}
-  <motion.button
-    onClick={prevSlide}
-    className="absolute top-1/2 left-2 md:left-6 transform -translate-y-1/2 
-               bg-white text-emerald-700 p-2 md:p-3 rounded-full shadow-lg 
-               hover:bg-yellow-200 hover:text-white transition"
-    aria-label="Previous Slide"
-    whileHover={{ scale: 1.1 }}
-    whileTap={{ scale: 0.95 }}
-  >
-    <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
-  </motion.button>
+    {/* Slides */}
+    <div
+      className="overflow-hidden rounded-2xl shadow-xl"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      <AnimatePresence initial={false} mode="wait">
+        <motion.div
+          key={current}
+          className="w-full relative"
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -100 }}
+          transition={{ duration: 0.5 }}
+        >
+          {/* Image container - relative so arrows stick correctly */}
+          <div className="relative w-full h-64 md:h-96">
+            <motion.img
+              src={category.items[current].image}
+              alt={category.items[current].name}
+              className="w-full h-full object-cover"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7 }}
+            />
 
-  <motion.button
-    onClick={nextSlide}
-    className="absolute top-1/2 right-2 md:right-6 transform -translate-y-1/2 
-               bg-white text-emerald-700 p-2 md:p-3 rounded-full shadow-lg 
-               hover:bg-yellow-200 hover:text-white transition"
-    aria-label="Next Slide"
-    whileHover={{ scale: 1.1 }}
-    whileTap={{ scale: 0.95 }}
-  >
-    <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
-  </motion.button>
-</div>
+            {/* Overlay bottom bar */}
+            <motion.div
+              className="absolute bottom-0 inset-x-0 bg-emerald-900/50 p-2 md:p-6 flex flex-col md:flex-row items-center justify-center h-20"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <span className="text-xs sm:text-base md:text-2xl font-serif font-bold text-white text-center">
+                {category.items[current].name}
+              </span>
+              <span className="mx-1 sm:mx-2 text-xs sm:text-base md:text-2xl text-white font-medium">
+                -
+              </span>
+              <span className="text-xs sm:text-base md:text-2xl text-white font-medium text-center">
+                {category.items[current].detail}
+              </span>
+            </motion.div>
 
-          </motion.div>
-        </AnimatePresence>
-      </div>
-      {/* Arrows - always centered vertically */}
-      <motion.button
-        onClick={prevSlide}
-        className="absolute top-1/2 left-2 md:left-6 transform -translate-y-1/2 bg-white text-emerald-700 p-2 md:p-3 rounded-full shadow-lg hover:bg-yellow-200 hover:text-white transition"
-        aria-label="Previous Slide"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        style={{ zIndex: 2 }}
-      >
-        {/* <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" /> */}
-      </motion.button>
-      <motion.button
-        onClick={nextSlide}
-        className="absolute top-1/2 right-2 md:right-6 transform -translate-y-1/2 bg-white text-emerald-700 p-2 md:p-3 rounded-full shadow-lg hover:bg-yellow-200 hover:text-white transition"
-        aria-label="Next Slide"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        style={{ zIndex: 2 }}
-      >
-        {/* <ChevronRight className="w-5 h-5 md:w-6 md:h-6" /> */}
-      </motion.button>
+            {/* Top-right badge */}
+            <motion.div
+              className="absolute top-4 right-4 bg-white/80 rounded-full px-4 py-2 shadow-lg flex items-center gap-2"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <Sparkles className="w-5 h-5 text-gold-400" />
+              <span className="text-emerald-700 font-semibold text-sm">
+                Exclusive Experience
+              </span>
+            </motion.div>
+
+            {/* Arrows */}
+            <motion.button
+              onClick={prevSlide}
+              className="absolute top-1/2 left-3 transform -translate-y-1/2 bg-white text-emerald-700 p-2 md:p-3 rounded-full shadow-lg hover:bg-yellow-200 hover:text-white transition"
+              aria-label="Previous Slide"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6" />
+            </motion.button>
+
+            <motion.button
+              onClick={nextSlide}
+              className="absolute top-1/2 right-3 transform -translate-y-1/2 bg-white text-emerald-700 p-2 md:p-3 rounded-full shadow-lg hover:bg-yellow-200 hover:text-white transition"
+              aria-label="Next Slide"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ChevronRight className="w-5 h-5 md:w-6 md:h-6" />
+            </motion.button>
+          </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
-  );
+  </div>
+);
+
+
 
   const renderEvents = () => (
     <motion.div
