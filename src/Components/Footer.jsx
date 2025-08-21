@@ -16,15 +16,21 @@ export default function Footer() {
         <p className="text-emerald-100 mb-4 font-medium">
           A botanical wonderland blending luxury, adventure, and celebration.
         </p>
-        <a
-          href="https://maps.app.goo.gl/1mBDsWfSG8mhkom1A?g_st=awb"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center text-yellow-300 hover:text-gold-400 font-semibold mb-4 transition-colors duration-200"
-        >
-          <MapPin className="w-5 h-5 mr-2 text-yellow-300" />
-          Experium, Road, near Pragathi Resorts, Chilkoor, Proddutur, Hyderabad, Telangana 501203
-        </a>
+       <a
+  href="https://maps.app.goo.gl/1mBDsWfSG8mhkom1A?g_st=awb"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-flex flex-col sm:flex-row items-center justify-center text-yellow-300 hover:text-gold-400 font-semibold mb-4 transition-colors duration-200"
+>
+  <span className="flex items-center justify-center mb-2 sm:mb-0">
+    <MapPin className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 mr-2 text-yellow-300" />
+    <span className="text-center sm:text-left text-sm sm:text-base">
+      Experium, Road, near Pragathi Resorts, Chilkoor, Proddutur, Hyderabad,
+      Telangana 501203
+    </span>
+  </span>
+</a>
+
         {/* Social Media Links */}
         <div className="flex justify-center space-x-6 mt-6 mb-4">
           <a

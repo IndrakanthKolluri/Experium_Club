@@ -1,8 +1,32 @@
 import { ChevronDown, MapPin, TreePine, Star, Users } from "lucide-react";
+import { useRef } from "react";
 
 export default function Hero({ slides, currentSlide, setCurrentSlide, scrollY }) {
+  const touchStartX = useRef(null);
+
+  // Swipe support for slides
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e) => {
+    if (!touchStartX.current) return;
+    const diff = e.changedTouches[0].clientX - touchStartX.current;
+    if (diff > 50) {
+      // Swipe right: previous slide
+      setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+    } else if (diff < -50) {
+      // Swipe left: next slide
+      setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+    }
+    touchStartX.current = null;
+  };
+
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section
+      className="relative h-screen flex items-center justify-center overflow-hidden"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       {/* Background Slides */}
       {slides.map((slide, index) => (
         <div
