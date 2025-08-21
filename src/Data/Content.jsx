@@ -157,7 +157,7 @@ export const categories = [
 // 📊 Stats
 export const stats = [
   { number: "150", label: "Acres of Wonder", icon: <MapPin className="w-8 h-8" /> },
-  { number: "10L+", label: "Plants & Trees", icon: <TreePine className="w-8 h-8" /> },
-//   { number: "25K+", label: "Exotic Species", icon: <Star className="w-8 h-8" /> },
-  { number: "5000+", label: "Event Capacity", icon: <Users className="w-8 h-8" /> },
+  { number: "10L+", label: "Plants and Trees", icon: <TreePine className="w-8 h-8" /> },
+  { number: "25K+", label: "Exotic Species", icon: <Star className="w-8 h-8" /> },
+  { number: "5k+", label: "Event Capacity", icon: <Users className="w-8 h-8" /> },
 ];

@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles, Users, Star, MapPin, Leaf } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const fadeInUp = {
@@ -15,6 +15,14 @@ const cardVariants = {
 const overlayVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 }
+};
+
+const sectionDescriptions = {
+  botanical: "Step into a lush paradise where nature flourishes. Our botanical gardens feature rare and exotic plants, tranquil walking paths, and immersive green spaces. Whether you seek relaxation or inspiration, this is a sanctuary for every nature lover.",
+  adventure: "Unleash your adventurous spirit! From thrilling zip lines and obstacle courses to serene kayaking and hiking trails, our adventure zone offers excitement for all ages. Safety and fun go hand-in-hand as you create unforgettable memories.",
+  luxury: "Experience the epitome of luxury and leisure. Indulge in world-class amenities, gourmet dining, spa treatments, and exclusive lounges. Every detail is designed to pamper you and elevate your stay to a new level of comfort.",
+  events: "Celebrate life’s special moments in our stunning venues. From grand weddings and corporate retreats to intimate gatherings, our event spaces are equipped with state-of-the-art facilities and breathtaking views.",
+  "experience-in-numbers": "Discover why Experium Club is the preferred destination for thousands. Our numbers speak for themselves—years of expertise, countless happy guests, and a legacy of excellence."
 };
 
 export default function CategorySection({ category }) {
@@ -54,6 +62,18 @@ export default function CategorySection({ category }) {
       variants={fadeInUp}
       transition={{ staggerChildren: 0.2 }}
     >
+      <motion.div
+        className="mb-8 flex flex-col items-center"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+      >
+        <Sparkles className="w-8 h-8 text-emerald-600 mb-2 animate-pulse" />
+        <p className="text-lg md:text-xl text-emerald-700 max-w-2xl text-center font-medium">
+          {sectionDescriptions.botanical}
+        </p>
+      </motion.div>
       {category.items.map((item, i) => (
         <motion.div
           key={i}
@@ -94,6 +114,15 @@ export default function CategorySection({ category }) {
             <p className="text-gray-700 text-base md:text-lg font-medium text-center max-w-xl">
               {item.detail}
             </p>
+            <motion.div
+              className="mt-4 flex items-center gap-2"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <Leaf className="w-5 h-5 text-emerald-500" />
+              <span className="text-emerald-600 font-semibold">Feel the freshness in every breath!</span>
+            </motion.div>
           </motion.div>
         </motion.div>
       ))}
@@ -109,6 +138,18 @@ export default function CategorySection({ category }) {
       variants={fadeInUp}
       transition={{ staggerChildren: 0.15 }}
     >
+      <motion.div
+        className="mb-8 flex flex-col items-center col-span-full"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+      >
+        <Star className="w-8 h-8 text-yellow-400 mb-2 animate-bounce" />
+        <p className="text-lg md:text-xl text-emerald-700 max-w-2xl text-center font-medium">
+          {sectionDescriptions.adventure}
+        </p>
+      </motion.div>
       {category.items.map((item, i) => (
         <motion.div
           key={i}
@@ -143,6 +184,15 @@ export default function CategorySection({ category }) {
             <div>
               <h3 className="text-xl md:text-2xl font-bold text-white">{item.name}</h3>
               <p className="text-sm text-white mt-2">{item.detail}</p>
+              <motion.div
+                className="mt-3 flex items-center justify-center gap-2"
+                initial={{ opacity: 0, y: 10 }}
+                whileHover={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+              >
+                <Users className="w-5 h-5 text-white" />
+                <span className="text-white font-semibold">Adventure for everyone!</span>
+              </motion.div>
             </div>
           </motion.div>
         </motion.div>
@@ -152,6 +202,18 @@ export default function CategorySection({ category }) {
 
   const renderLuxury = () => (
     <div className="relative w-full mx-auto">
+      <motion.div
+        className="mb-8 flex flex-col items-center"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+      >
+        <Sparkles className="w-8 h-8 text-gold-400 mb-2 animate-spin" />
+        <p className="text-lg md:text-xl text-emerald-700 max-w-2xl text-center font-medium">
+          {sectionDescriptions.luxury}
+        </p>
+      </motion.div>
       {/* Slides */}
       <div
         className="overflow-hidden rounded-2xl shadow-xl"
@@ -193,6 +255,15 @@ export default function CategorySection({ category }) {
                   {category.items[current].detail}
                 </span>
               </motion.div>
+              <motion.div
+                className="absolute top-4 right-4 bg-white/80 rounded-full px-4 py-2 shadow-lg flex items-center gap-2"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <Sparkles className="w-5 h-5 text-gold-400" />
+                <span className="text-emerald-700 font-semibold text-sm">Exclusive Experience</span>
+              </motion.div>
             </div>
           </motion.div>
         </AnimatePresence>
@@ -228,6 +299,18 @@ export default function CategorySection({ category }) {
       variants={fadeInUp}
       transition={{ staggerChildren: 0.15 }}
     >
+      <motion.div
+        className="mb-8 flex flex-col items-center"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+      >
+        <MapPin className="w-8 h-8 text-emerald-600 mb-2 animate-bounce" />
+        <p className="text-lg md:text-xl text-emerald-700 max-w-2xl text-center font-medium">
+          {sectionDescriptions.events}
+        </p>
+      </motion.div>
       {category.items.map((item, i) => (
         <motion.div
           key={i}
@@ -258,6 +341,15 @@ export default function CategorySection({ category }) {
                 {item.name}
               </h3>
               <p className="text-gray-100">{item.detail}</p>
+              <motion.div
+                className="mt-3 flex items-center justify-center gap-2"
+                initial={{ opacity: 0, y: 10 }}
+                whileHover={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+              >
+                <Star className="w-5 h-5 text-gold-400" />
+                <span className="text-white font-semibold">Make your event unforgettable!</span>
+              </motion.div>
             </div>
           </motion.div>
         </motion.div>
@@ -282,6 +374,18 @@ export default function CategorySection({ category }) {
         variants={fadeInUp}
         transition={{ staggerChildren: 0.15 }}
       >
+        <motion.div
+          className="col-span-2 sm:col-span-4 mb-6 flex flex-col items-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
+          <Users className="w-8 h-8 text-emerald-600 mb-2 animate-pulse" />
+          <p className="text-lg md:text-xl text-emerald-700 max-w-2xl text-center font-medium">
+            {sectionDescriptions["experience-in-numbers"]}
+          </p>
+        </motion.div>
         {stats.map((stat, i) => (
           <motion.div
             key={i}

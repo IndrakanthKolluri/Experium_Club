@@ -5,7 +5,7 @@ export default function Stats({ stats }) {
         <h2 className="text-4xl md:text-5xl font-bold mb-16 text-emerald-700">
           Experience in Numbers
         </h2>
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, i) => (
             <div key={i} className="group">
               <div className="bg-white p-8 rounded-xl border border-emerald-200 hover:border-yellow-500 transition-all duration-500 hover:shadow-2xl group-hover:scale-105">
