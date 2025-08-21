@@ -120,8 +120,8 @@ export default function CategorySection({ category }) {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <Leaf className="w-5 h-5 text-emerald-500" />
-              <span className="text-emerald-600 font-semibold">Feel the freshness in every breath!</span>
+              {/* <Leaf className="w-5 h-5 text-emerald-500" /> */}
+              {/* <span className="text-emerald-600 font-semibold">Feel the freshness in every breath!</span> */}
             </motion.div>
           </motion.div>
         </motion.div>
