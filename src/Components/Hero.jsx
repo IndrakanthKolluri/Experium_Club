@@ -68,7 +68,7 @@ export default function Hero({ slides, currentSlide, setCurrentSlide, scrollY })
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+            className={`w-3 h-3 rounded-full transition-all duration-150 ${
               index === currentSlide
                 ? "bg-gold-400 w-8"
                 : "bg-emerald-300 hover:bg-gold-300"
